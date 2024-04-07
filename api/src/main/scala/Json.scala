@@ -1,24 +1,21 @@
 package aminmal.api
 
-import aminmal.core._
-import aminmal.cmp._
+import aminmal.impl.playImpl.Macros
 
 import scala.language.experimental.macros
 
 object Json {
+  def parse(s: String): Result[JValue] = aminmal.impl.playImpl.parse(s)
 
-  def formatter[T]: Formatter[T] = macro JsMacros.makeFormatterImpl[T]
+  def toJson[T](value: T)(implicit jWriter: JWriter[T]): JValue = jWriter.write(value)
 
-  def reader[T]: Reader[T] = macro JsMacros.makeReaderImpl[T]
+  def fromJson[T](json: JValue)(implicit jReader: JReader[T]): Result[T] =
+    jReader.read(json)
 
-  def writer[T]: Writer[T] = macro JsMacros.makeWriterImpl[T]
+  def parseAs[T](s: String)(implicit jReader: JReader[T]): Result[T] =
+    parse(s).flatMap(fromJson[T])
 
-  def parse(s: String): Result[JValue] = aminmal.core.parse(s)
-
-  def parseAs[T](s: String)(implicit r: Reader[T]): Result[T] = parse(s).flatMap(fromJson[T])
-
-  def toJson[T](value: T)(implicit w: Writer[T]): JValue = w.write(value)
-
-  def fromJson[T](j: JValue)(implicit r: Reader[T]): Result[T] = r.read(j)
-
+  def jReader[T]: JReader[T] = macro Macros.makeJReaderImpl[T]
+  def jWriter[T]: JWriter[T] = macro Macros.makeJWriterImpl[T]
+  def jFormatter[T]: JFormatter[T] = macro Macros.makeJFormatterImpl[T]
 }

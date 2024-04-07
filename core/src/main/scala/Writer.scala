@@ -1,14 +1,8 @@
 package aminmal.core
 
-trait Writer[T] {
-  def write(value: T): JValue
-  def writer: LibWriter[T]
-}
+trait Writer[T, JS, UnderlyingWriter[_], ResultMonad[_]] {
 
-private[core] class WriterImpl[T](override val writer: LibWriter[T]) extends Writer[T] {
-  override def write(value: T): JValue = writer.writes(value)
-}
+  def write(t: T): ResultMonad[JS]
 
-object Writer {
-  def fromLib[T](writer: LibWriter[T]): Writer[T] = new WriterImpl[T](writer)
+  def writer: UnderlyingWriter[T]
 }

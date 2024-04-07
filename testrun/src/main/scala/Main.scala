@@ -1,11 +1,12 @@
 import aminmal.api.Json
+import aminmal.api._
 
 object Main extends App {
 
   case class Person(name: String, age: Int)
 
   object Person {
-    implicit val format = Json.formatter[Person]
+    implicit val format: JFormatter[Person] = Json.jFormatter
   }
 
   val json =
