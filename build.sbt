@@ -32,8 +32,7 @@ lazy val api = (project in file("api"))
     idePackagePrefix := Some("aminmal.api")
   ).dependsOn(cmp)
 
-lazy val root = (project in file("."))
+lazy val testrun = (project in file("testrun"))
   .settings(
-    name := "anyjson",
-    idePackagePrefix := Some("aminmal")
+    name := "testrun"
   ).dependsOn(api)
