@@ -28,14 +28,14 @@ lazy val core = (project in file("core"))
 lazy val playImpl = (project in file("libImpl/play"))
   .settings(
     name := "playImpl",
-    idePackagePrefix := Some("aminmal.anyjson.impl.playImpl"),
+    idePackagePrefix := Some("aminmal.anyjson.impl"),
     libraryDependencies ++= Seq(reflection, playJson, catsCore)
   ).dependsOn(core)
 
 lazy val circeImpl = (project in file("libImpl/circe"))
   .settings(
     name := "circeImpl",
-    idePackagePrefix := Some("aminmal.anyjson.impl.circeImpl"),
+    idePackagePrefix := Some("aminmal.anyjson.impl"),
     libraryDependencies ++= (reflection +: circe)
   ).dependsOn(core)
 

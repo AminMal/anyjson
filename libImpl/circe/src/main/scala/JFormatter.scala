@@ -1,4 +1,4 @@
-package aminmal.anyjson.impl.circeImpl
+package aminmal.anyjson.impl
 
 import aminmal.anyjson.core.Formatter
 

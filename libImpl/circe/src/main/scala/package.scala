@@ -1,6 +1,6 @@
-package aminmal.anyjson.impl
+package aminmal.anyjson
 
-package object circeImpl {
+package object impl {
 
   type JValue = io.circe.Json
 

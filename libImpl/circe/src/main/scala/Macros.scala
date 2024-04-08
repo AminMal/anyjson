@@ -1,4 +1,4 @@
-package aminmal.anyjson.impl.circeImpl
+package aminmal.anyjson.impl
 
 import scala.reflect.macros.blackbox
 
@@ -9,7 +9,7 @@ class Macros(val c: blackbox.Context) {
     val typeT = c.weakTypeOf[T]
     q"""
        import io.circe._, io.circe.generic.semiauto._
-       import aminmal.anyjson.impl.circeImpl.JReader
+       import aminmal.anyjson.impl.JReader
        JReader.fromLib(deriveDecoder[$typeT])
      """
   }
@@ -18,7 +18,7 @@ class Macros(val c: blackbox.Context) {
     val typeT = c.weakTypeOf[T]
     q"""
        import io.circe._, io.circe.generic.semiauto._
-       import aminmal.anyjson.impl.circeImpl.JWriter
+       import aminmal.anyjson.impl.JWriter
        JWriter.fromLib(deriveEncoder[$typeT])
      """
   }
@@ -27,7 +27,7 @@ class Macros(val c: blackbox.Context) {
     val typeT = c.weakTypeOf[T]
     q"""
        import io.circe._, io.circe.generic.semiauto._
-       import aminmal.anyjson.impl.circeImpl.JFormatter
+       import aminmal.anyjson.impl.JFormatter
        JFormatter.fromLib(deriveCodec[$typeT])
      """
   }

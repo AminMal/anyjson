@@ -1,11 +1,11 @@
 package aminmal.anyjson.api
 
-import aminmal.anyjson.impl.circeImpl.Macros
+import aminmal.anyjson.impl.Macros
 
 import scala.language.experimental.macros
 
 object AnyJson {
-  def parse(s: String): Result[JValue] = aminmal.anyjson.impl.circeImpl.parse(s)
+  def parse(s: String): Result[JValue] = aminmal.anyjson.impl.parse(s)
 
   def toJson[T](value: T)(implicit jWriter: JWriter[T]): JValue = jWriter.write(value)
 

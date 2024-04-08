@@ -1,6 +1,6 @@
-package aminmal.anyjson.impl
+package aminmal.anyjson
 
-package object playImpl {
+package object impl {
 
   type JValue = play.api.libs.json.JsValue
 

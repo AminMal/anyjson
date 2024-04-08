@@ -1,4 +1,4 @@
-package aminmal.anyjson.impl.playImpl
+package aminmal.anyjson.impl
 
 import aminmal.anyjson.core.Reader
 
