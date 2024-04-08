@@ -1,4 +1,4 @@
-import aminmal.anyjson.api.Json
+import aminmal.anyjson.api.AnyJson
 import aminmal.anyjson.api._
 
 object Main extends App {
@@ -6,7 +6,7 @@ object Main extends App {
   case class Person(name: String, age: Int)
 
   object Person {
-    implicit val format: JFormatter[Person] = Json.jFormatter
+    implicit val format: JFormatter[Person] = AnyJson.jFormatter
   }
 
   val json =
@@ -25,9 +25,9 @@ object Main extends App {
        |}
        |""".stripMargin
 
-  println(Json.toJson(Person("Bob", 24)))
-  println(Json.parseAs[Person](json))
-  println(Json.parseAs[Person](json2))
+  println(AnyJson.toJson(Person("Bob", 24)))
+  println(AnyJson.parseAs[Person](json))
+  println(AnyJson.parseAs[Person](json2))
 
 
 }

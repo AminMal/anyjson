@@ -4,7 +4,7 @@ import aminmal.anyjson.impl.playImpl.Macros
 
 import scala.language.experimental.macros
 
-object Json {
+object AnyJson {
   def parse(s: String): Result[JValue] = aminmal.anyjson.impl.playImpl.parse(s)
 
   def toJson[T](value: T)(implicit jWriter: JWriter[T]): JValue = jWriter.write(value)
