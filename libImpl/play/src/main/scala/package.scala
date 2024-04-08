@@ -1,4 +1,4 @@
-package aminmal.impl
+package aminmal.anyjson.impl
 
 package object playImpl {
 

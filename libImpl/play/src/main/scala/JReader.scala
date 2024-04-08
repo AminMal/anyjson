@@ -1,6 +1,6 @@
-package aminmal.impl.playImpl
+package aminmal.anyjson.impl.playImpl
 
-import aminmal.core.Reader
+import aminmal.anyjson.core.Reader
 
 trait JReader[T] extends Reader[T, JValue, JError, LibReader, cats.Id] {}
 

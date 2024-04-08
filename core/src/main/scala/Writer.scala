@@ -1,4 +1,4 @@
-package aminmal.core
+package aminmal.anyjson.core
 
 trait Writer[T, JS, UnderlyingWriter[_], ResultMonad[_]] {
 

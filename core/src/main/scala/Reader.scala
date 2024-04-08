@@ -1,4 +1,4 @@
-package aminmal.core
+package aminmal.anyjson.core
 
 trait Reader[T, JS, Error, UnderlyingReader[_], ResultMonad[_]] {
 

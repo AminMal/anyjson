@@ -1,4 +1,4 @@
-package aminmal.impl.playImpl
+package aminmal.anyjson.impl.playImpl
 
 import scala.reflect.macros.blackbox
 
@@ -9,7 +9,7 @@ class Macros(val c: blackbox.Context) {
   def makeJReaderImpl[T : c.WeakTypeTag]: c.Tree = {
     val typeT = c.weakTypeOf[T]
     q"""
-       import aminmal.impl.playImpl.JReader
+       import aminmal.anyjson.impl.playImpl.JReader
        JReader.fromLib(_root_.play.api.libs.json.Json.reads[$typeT])
      """
   }
@@ -17,7 +17,7 @@ class Macros(val c: blackbox.Context) {
   def makeJWriterImpl[T : c.WeakTypeTag]: c.Tree = {
     val typeT = c.weakTypeOf[T]
     q"""
-       import aminmal.impl.playImpl.JWriter
+       import aminmal.anyjson.impl.playImpl.JWriter
        JWriter.fromLib(_root_.play.api.libs.json.Json.writes[$typeT])
      """
   }
@@ -25,7 +25,7 @@ class Macros(val c: blackbox.Context) {
   def makeJFormatterImpl[T : c.WeakTypeTag]: c.Tree = {
     val typeT = c.weakTypeOf[T]
     q"""
-       import aminmal.impl.playImpl.JFormatter
+       import aminmal.anyjson.impl.playImpl.JFormatter
        JFormatter.fromLib(_root_.play.api.libs.json.Json.format[$typeT])
      """
   }

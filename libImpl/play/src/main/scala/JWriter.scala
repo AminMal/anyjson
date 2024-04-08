@@ -1,6 +1,6 @@
-package aminmal.impl.playImpl
+package aminmal.anyjson.impl.playImpl
 
-import aminmal.core.Writer
+import aminmal.anyjson.core.Writer
 
 trait JWriter[T] extends Writer[T, JValue, LibWriter, cats.Id] {}
 

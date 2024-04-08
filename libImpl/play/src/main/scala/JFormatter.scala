@@ -1,6 +1,6 @@
-package aminmal.impl.playImpl
+package aminmal.anyjson.impl.playImpl
 
-import aminmal.core.Formatter
+import aminmal.anyjson.core.Formatter
 
 sealed trait JFormatter[T]
   extends JReader[T] with JWriter[T]

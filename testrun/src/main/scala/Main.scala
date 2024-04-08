@@ -1,5 +1,5 @@
-import aminmal.api.Json
-import aminmal.api._
+import aminmal.anyjson.api.Json
+import aminmal.anyjson.api._
 
 object Main extends App {
 

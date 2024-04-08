@@ -15,20 +15,20 @@ val playJson = "com.typesafe.play" %% "play-json" % "2.10.4"
 lazy val core = (project in file("core"))
   .settings(
     name := "core",
-    idePackagePrefix := Some("aminmal.core"),
+    idePackagePrefix := Some("aminmal.anyjson.core"),
   )
 
 lazy val playImpl = (project in file("libImpl/play"))
   .settings(
     name := "playImpl",
-    idePackagePrefix := Some("aminmal.impl.playImpl"),
+    idePackagePrefix := Some("aminmal.anyjson.impl.playImpl"),
     libraryDependencies ++= Seq(reflection, playJson, catsCore)
   ).dependsOn(core)
 
 lazy val api = (project in file("api"))
   .settings(
     name := "api",
-    idePackagePrefix := Some("aminmal.api")
+    idePackagePrefix := Some("aminmal.anyjson.api")
   ).dependsOn(playImpl)
 
 lazy val testrun = (project in file("testrun"))
