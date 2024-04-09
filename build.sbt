@@ -80,7 +80,7 @@ lazy val api = (project in file("api"))
   .settings(
     name := "api",
     idePackagePrefix := Some("aminmal.anyjson.api")
-  ).dependsOn(json4sNativeImpl)
+  ).dependsOn(json4sJacksonImpl)
 
 lazy val testrun = (project in file("testrun"))
   .settings(
