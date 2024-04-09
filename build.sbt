@@ -29,6 +29,8 @@ lazy val json4sJackson = "org.json4s" %% "json4s-jackson" % "4.0.7"
 
 val spray = "io.spray" %%  "spray-json" % "1.3.6"
 
+val zioJson = "dev.zio" %% "zio-json" % "0.6.2"
+
 lazy val core = (project in file("core"))
   .settings(
     name := "core",
@@ -84,11 +86,18 @@ lazy val sprayJsonImpl = (project in file("libImpl/spray"))
     libraryDependencies ++= Seq(catsCore, spray)
   ).dependsOn(core, libImplCore)
 
+lazy val zioJsonImpl = (project in file("libImpl/zio"))
+  .settings(
+    name := "zioJsonImpl",
+    idePackagePrefix := Some("aminmal.anyjson.impl"),
+    libraryDependencies ++= Seq(catsCore, zioJson)
+  ).dependsOn(core, libImplCore)
+
 lazy val api = (project in file("api"))
   .settings(
     name := "api",
     idePackagePrefix := Some("aminmal.anyjson.api")
-  ).dependsOn(sprayJsonImpl)
+  ).dependsOn(zioJsonImpl)
 
 lazy val testrun = (project in file("testrun"))
   .settings(

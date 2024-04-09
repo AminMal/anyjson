@@ -12,4 +12,4 @@ AnyJson currently supports:
 - [X] Json4sJackson
 - [X] Jsoniter
 - [X] SprayJson
-- [ ] ZIO Json
+- [X] ZIO Json
