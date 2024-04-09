@@ -34,40 +34,47 @@ lazy val core = (project in file("core"))
     idePackagePrefix := Some("aminmal.anyjson.core"),
   )
 
+lazy val libImplCore = (project in file("libImpl/core"))
+  .settings(
+    name := "libImpl-core",
+    idePackagePrefix := Some("aminmal.anyjson.implcore"),
+    libraryDependencies += reflection
+  )
+
 lazy val playImpl = (project in file("libImpl/play"))
   .settings(
     name := "playImpl",
     idePackagePrefix := Some("aminmal.anyjson.impl"),
-    libraryDependencies ++= Seq(reflection, playJson, catsCore)
-  ).dependsOn(core)
+    libraryDependencies ++= Seq(playJson, catsCore)
+  ).dependsOn(core, libImplCore)
 
 lazy val circeImpl = (project in file("libImpl/circe"))
   .settings(
     name := "circeImpl",
     idePackagePrefix := Some("aminmal.anyjson.impl"),
-    libraryDependencies ++= (reflection +: circe)
-  ).dependsOn(core)
+    libraryDependencies ++= circe
+  ).dependsOn(core, libImplCore)
 
 lazy val jsoniterImpl = (project in file("libImpl/jsoniter"))
   .settings(
     name := "jsoniterImpl",
     idePackagePrefix := Some("aminmal.anyjson.impl"),
-    libraryDependencies ++= (reflection +: catsCore +: jsonIter)
-  ).dependsOn(core)
+    libraryDependencies ++= (catsCore +: jsonIter)
+  ).dependsOn(core, libImplCore)
 
 lazy val json4sNativeImpl = (project in file("libImpl/json4s"))
   .settings(
     name := "json4sImpl",
     idePackagePrefix := Some("aminmal.anyjson.impl"),
-    libraryDependencies ++= Seq(reflection, catsCore, json4sNative)
-  ).dependsOn(core)
+    libraryDependencies ++= Seq(catsCore, json4sNative)
+  ).dependsOn(core, libImplCore)
 
 lazy val json4sJacksonImpl = (project in file("libImpl/json4sjackson"))
   .settings(
     name := "json4sImpl",
     idePackagePrefix := Some("aminmal.anyjson.impl"),
-    libraryDependencies ++= Seq(reflection, catsCore, json4sJackson)
-  ).dependsOn(core)
+    libraryDependencies ++= Seq(catsCore, json4sJackson)
+  ).dependsOn(core, libImplCore)
 
 lazy val api = (project in file("api"))
   .settings(

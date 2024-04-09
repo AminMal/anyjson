@@ -2,10 +2,12 @@ package aminmal.anyjson.impl
 
 import scala.reflect.macros.blackbox
 
-class Macros(val c: blackbox.Context) {
+import aminmal.anyjson.implcore.MacroTemplate
+
+class Macros(override val c: blackbox.Context) extends MacroTemplate(c) {
   import c.universe._
 
-  def makeJReaderImpl[T : c.WeakTypeTag]: c.Tree = {
+  override def makeJReaderImpl[T : c.WeakTypeTag]: c.Tree = {
     val typeT = c.weakTypeOf[T]
     q"""
        import io.circe._, io.circe.generic.semiauto._
@@ -14,7 +16,7 @@ class Macros(val c: blackbox.Context) {
      """
   }
 
-  def makeJWriterImpl[T : c.WeakTypeTag]: c.Tree = {
+  override def makeJWriterImpl[T : c.WeakTypeTag]: c.Tree = {
     val typeT = c.weakTypeOf[T]
     q"""
        import io.circe._, io.circe.generic.semiauto._
@@ -23,7 +25,7 @@ class Macros(val c: blackbox.Context) {
      """
   }
 
-  def makeJFormatterImpl[T : c.WeakTypeTag]: c.Tree = {
+  override def makeJFormatterImpl[T : c.WeakTypeTag]: c.Tree = {
     val typeT = c.weakTypeOf[T]
     q"""
        import io.circe._, io.circe.generic.semiauto._

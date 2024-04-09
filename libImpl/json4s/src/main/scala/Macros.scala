@@ -2,11 +2,13 @@ package aminmal.anyjson.impl
 
 import scala.reflect.macros.blackbox
 
-class Macros(val c: blackbox.Context) {
+import aminmal.anyjson.implcore.MacroTemplate
+
+class Macros(override val c: blackbox.Context) extends MacroTemplate(c) {
 
   import c.universe._
 
-  def makeJReaderImpl[T : c.WeakTypeTag]: c.Tree = {
+  override def makeJReaderImpl[T : c.WeakTypeTag]: c.Tree = {
     val typeT = c.weakTypeOf[T]
     val fields = typeT.decls.filter(_.isPrivateThis)
     val fieldNamesVararg = fields.map(_.asTerm.name.toString.trim).map(a => Literal(Constant(a)))
@@ -21,7 +23,7 @@ class Macros(val c: blackbox.Context) {
      """
   }
 
-  def makeJWriterImpl[T : c.WeakTypeTag]: c.Tree = {
+  override def makeJWriterImpl[T : c.WeakTypeTag]: c.Tree = {
     val typeT = c.weakTypeOf[T]
     val fields = typeT.decls.filter(_.isPrivateThis)
     val fieldNames = fields.map(_.asTerm.name.toString.trim).map(TermName.apply)
@@ -36,7 +38,7 @@ class Macros(val c: blackbox.Context) {
      """
   }
 
-  def makeJFormatterImpl[T : c.WeakTypeTag]: c.Tree = {
+  override def makeJFormatterImpl[T : c.WeakTypeTag]: c.Tree = {
     val typeT = c.weakTypeOf[T]
     val fields = typeT.decls.filter(_.isPrivateThis)
     val fieldNames = fields.map(_.asTerm.name.toString.trim).map(TermName.apply)
