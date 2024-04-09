@@ -13,3 +13,41 @@ AnyJson currently supports:
 - [X] Jsoniter
 - [X] SprayJson
 - [X] ZIO Json
+
+## How to Use
+As already mentioned, this library also follows the Codec type class pattern.
+So you'll need to define formatters/readers/writers for your classes. 
+The general behavior of them is defined by the library, for instance, if you use jsoniter,
+you don't need to create them for every single class, only the top-most class.
+But if you're using play under the hood, you'll need to provide one for each of your classes.
+
+
+Considering a simple example, here's how you use `AnyJson`:
+
+### Convert to JSON
+```scala
+import aminmal.anyjson.api.AnyJson
+import aminmal.anyjson.api._
+
+case class Person(name: String, age: Int)
+
+object Person {
+  implicit val formatter: JFormatter[Person] = AnyJson.jFormatter
+}
+
+val person = Person("Bob", 42)
+val json: JValue = AnyJson.toJson(person) // inner-library-specific json AST representing {"name":"Bob,"age":42}
+```
+
+### Convert from JSON
+```scala
+val json: JValue = AnyJson.toJson(Person("Bob", 42))
+val person = AnyJson.fromJson[Person](json)
+```
+
+### Parse to JValue and types
+```scala
+val str = "{\"name\":\"Bob\",\"age\":42}"
+val json = AnyJson.parse(str)
+val person = AnyJson.parseAs[Person](json)
+```
