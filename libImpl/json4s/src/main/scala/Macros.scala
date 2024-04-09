@@ -48,11 +48,6 @@ class Macros(override val c: blackbox.Context) extends MacroTemplate(c) {
     val typeTName = TypeName(typeT.typeSymbol.name.toString)
     val companionTName = TermName(typeT.typeSymbol.name.toString)
     val fieldTypes = fields.map(_.asTerm.info.typeSymbol.name).map(s => TypeName(s.toString))
-    println(q"""
-       import org.json4s.DefaultJsonFormats._
-       import aminmal.anyjson.impl.JFormatter
-       JFormatter.fromLib(org.json4s.JsonFormat.format[..$fieldTypes, $typeTName]($companionTName.$constructor, x => (..$fieldSelections))(..$fieldNamesVararg))
-     """)
     q"""
        import org.json4s.DefaultJsonFormats._
        import aminmal.anyjson.impl.JFormatter
