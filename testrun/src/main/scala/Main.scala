@@ -6,8 +6,7 @@ object Main extends App {
   case class Person(name: String, age: Int)
 
   object Person {
-    implicit val reader: JReader[Person] = AnyJson.jReader
-    implicit val writer: JWriter[Person] = AnyJson.jWriter
+    implicit val format: JFormatter[Person] = AnyJson.jFormatter
   }
 
   val json =

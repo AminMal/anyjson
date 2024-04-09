@@ -25,8 +25,9 @@ lazy val jsonIter = Seq(
 )
 
 lazy val json4sNative = "org.json4s" %% "json4s-native" % "4.0.7"
-
 lazy val json4sJackson = "org.json4s" %% "json4s-jackson" % "4.0.7"
+
+val spray = "io.spray" %%  "spray-json" % "1.3.6"
 
 lazy val core = (project in file("core"))
   .settings(
@@ -76,11 +77,18 @@ lazy val json4sJacksonImpl = (project in file("libImpl/json4sjackson"))
     libraryDependencies ++= Seq(catsCore, json4sJackson)
   ).dependsOn(core, libImplCore)
 
+lazy val sprayJsonImpl = (project in file("libImpl/spray"))
+  .settings(
+    name := "sprayImpl",
+    idePackagePrefix := Some("aminmal.anyjson.impl"),
+    libraryDependencies ++= Seq(catsCore, spray)
+  ).dependsOn(core, libImplCore)
+
 lazy val api = (project in file("api"))
   .settings(
     name := "api",
     idePackagePrefix := Some("aminmal.anyjson.api")
-  ).dependsOn(json4sJacksonImpl)
+  ).dependsOn(sprayJsonImpl)
 
 lazy val testrun = (project in file("testrun"))
   .settings(
