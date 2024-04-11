@@ -1,19 +1,10 @@
-ThisBuild / version := "0.1.0-SNAPSHOT"
+import scala.collection.Seq
 
 val SCALA_VERSION = "2.13.13"
 
-ThisBuild / scalaVersion := SCALA_VERSION
-
-ThisBuild / organization := "aminmal.anyjson"
-
-ThisBuild / name := "anyjson"
-
-name := "anyjson"
-
 lazy val reflection = "org.scala-lang" % "scala-reflect" % SCALA_VERSION
 
-
-val catsVersion = "2.10.0"
+lazy val catsVersion = "2.10.0"
 lazy val catsCore = "org.typelevel" %% "cats-core" % catsVersion
 
 lazy val playJson = "com.typesafe.play" %% "play-json" % "2.10.4"
@@ -33,9 +24,19 @@ lazy val jsonIter = Seq(
 lazy val json4sNative = "org.json4s" %% "json4s-native" % "4.0.7"
 lazy val json4sJackson = "org.json4s" %% "json4s-jackson" % "4.0.7"
 
-val spray = "io.spray" %%  "spray-json" % "1.3.6"
+lazy val spray = "io.spray" %%  "spray-json" % "1.3.6"
 
-val zioJson = "dev.zio" %% "zio-json" % "0.6.2"
+lazy val zioJson = "dev.zio" %% "zio-json" % "0.6.2"
+
+ThisBuild / version := "0.1.0-SNAPSHOT"
+
+ThisBuild / scalaVersion := SCALA_VERSION
+
+ThisBuild / organization := "aminmal.anyjson"
+
+ThisBuild / name := "anyjson"
+
+name := "anyjson"
 
 lazy val core = (project in file("core"))
   .settings(
@@ -73,24 +74,23 @@ lazy val jsoniterImpl = (project in file("libImpl/jsoniter"))
 
 lazy val json4sNativeImpl = (project in file("libImpl/json4s"))
   .settings(
-    name := "json4sImpl",
+    name := "json4sNativeImpl",
     idePackagePrefix := Some("aminmal.anyjson.impl"),
     libraryDependencies ++= Seq(catsCore, json4sNative),
   ).dependsOn(core, libImplCore)
 
 lazy val json4sJacksonImpl = (project in file("libImpl/json4sjackson"))
   .settings(
-    name := "json4sImpl",
+    name := "json4sJacksonImpl",
     idePackagePrefix := Some("aminmal.anyjson.impl"),
     libraryDependencies ++= Seq(catsCore, json4sJackson),
   ).dependsOn(core, libImplCore)
 
 lazy val sprayJsonImpl = (project in file("libImpl/spray"))
   .settings(
-    name := "sprayImpl",
+    name := "sprayJsonImpl",
     idePackagePrefix := Some("aminmal.anyjson.impl"),
     libraryDependencies ++= Seq(catsCore, spray),
-    organization := "aminmal.anyjson"
   ).dependsOn(core, libImplCore)
 
 lazy val zioJsonImpl = (project in file("libImpl/zio"))
@@ -104,7 +104,8 @@ lazy val api = (project in file("api"))
   .settings(
     name := "api",
     idePackagePrefix := Some("aminmal.anyjson.api"),
-  ).dependsOn(zioJsonImpl)
+    publish / skip := true,
+  ).dependsOn(playImpl)
 
 lazy val libImpl = (project in file("libImpl"))
   .aggregate(libImplCore, circeImpl, json4sNativeImpl, json4sJacksonImpl, jsoniterImpl, playImpl, sprayJsonImpl, zioJsonImpl)
@@ -112,8 +113,14 @@ lazy val libImpl = (project in file("libImpl"))
     publish / skip := true
   )
 
+lazy val apis = (project in file("apis"))
+  .aggregate(
+    List("circe", "json4s", "json4s-jackson", "jsoniter", "play", "spray", "zio-json")
+      .map(name => LocalProject(s"anyjson-$name")): _*
+  )
+
 lazy val anyjson = (project in file("."))
-  .aggregate(api, core, libImpl)
+  .aggregate(api, core, libImpl, apis)
   .settings(
     publish / skip := true
   )
