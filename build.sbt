@@ -2,6 +2,17 @@ import scala.collection.Seq
 
 val SCALA_VERSION = "2.13.13"
 
+ThisBuild / version := "0.1.0"
+
+ThisBuild / scalaVersion := SCALA_VERSION
+
+ThisBuild / organization := "aminmal.anyjson"
+
+ThisBuild / name := "anyjson"
+
+name := "anyjson"
+
+
 lazy val reflection = "org.scala-lang" % "scala-reflect" % SCALA_VERSION
 
 lazy val catsVersion = "2.10.0"
@@ -27,16 +38,6 @@ lazy val json4sJackson = "org.json4s" %% "json4s-jackson" % "4.0.7"
 lazy val spray = "io.spray" %%  "spray-json" % "1.3.6"
 
 lazy val zioJson = "dev.zio" %% "zio-json" % "0.6.2"
-
-ThisBuild / version := "0.1.0-SNAPSHOT"
-
-ThisBuild / scalaVersion := SCALA_VERSION
-
-ThisBuild / organization := "aminmal.anyjson"
-
-ThisBuild / name := "anyjson"
-
-name := "anyjson"
 
 lazy val core = (project in file("core"))
   .settings(
