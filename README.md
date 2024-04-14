@@ -51,3 +51,16 @@ val str = "{\"name\":\"Bob\",\"age\":42}"
 val json = AnyJson.parse(str)
 val person = AnyJson.parseAs[Person](json)
 ```
+
+## Apply library-specific configurations
+If a library supports some sort of configurations, you should be able to also apply it to anyjson, for instance,
+play uses an implicit configuration instance for reading and writing:
+```scala
+implicit val conf: JsonConfiguration = ???
+implicit val format: Format[SomeType] = Json.format[SomeType]
+```
+Can be converted to:
+```scala
+implicit val conf: JsonConfiguration = ???
+implicit val format: JFormat[SomeType] = AnyJson.jFormat[SomeType]
+```
