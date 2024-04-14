@@ -2,11 +2,11 @@ import scala.collection.Seq
 
 val SCALA_VERSION = "2.13.13"
 
-ThisBuild / version := "0.1.0"
+ThisBuild / version := "0.1.1"
 
 ThisBuild / scalaVersion := SCALA_VERSION
 
-ThisBuild / organization := "aminmal.anyjson"
+ThisBuild / organization := "com.github.aminmal"
 
 ThisBuild / name := "anyjson"
 

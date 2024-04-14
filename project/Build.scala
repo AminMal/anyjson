@@ -15,10 +15,8 @@ object Build extends AutoPlugin {
 
         Project(s"anyjson-$libName", file(s"apis/api-$libName"))
           .settings(
-            organization := "aminmal.anyjson",
-            sourceDirectory := dir / s"apis/api-$libName/src/main/scala",
-            sourceManaged := dir / s"apis/api-$libName/src/main/scala",
-            packageSrc := dir / s"apis/api-$libName/src/main/scala",
+            organization := "com.github.aminmal",
+            Compile / organization := "com.github.aminmal",
             Compile / sourceGenerators += Def.task [Seq[File]] {
               val packageFileLoc = dir / s"${libDir}/src/main/scala/package.scala"
               val anyJsonFileLoc = dir / s"${libDir}/src/main/scala/AnyJson.scala"
