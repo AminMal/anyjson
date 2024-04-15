@@ -1,4 +1,5 @@
 import scala.collection.Seq
+import xerial.sbt.Sonatype._
 
 val SCALA_VERSION = "2.13.13"
 
@@ -11,6 +12,15 @@ ThisBuild / organization := "com.github.aminmal"
 ThisBuild / name := "anyjson"
 
 name := "anyjson"
+
+description := "Scala Json libraries syntax-unifier"
+
+licenses := Seq("MIT" -> url("https://opensource.org/license/mit"))
+
+sonatypeProjectHosting := Some(GitHubHosting("AminMal", "anyjson", "Amin Malekloo", "amin.malekloo@yahoo.com"))
+
+publishTo := sonatypePublishToBundle.value
+
 
 
 lazy val reflection = "org.scala-lang" % "scala-reflect" % SCALA_VERSION
