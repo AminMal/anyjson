@@ -1,21 +1,23 @@
 package aminmal.anyjson
 
-package object impl {
+import aminmal.anyjson.implcore.JsonLibDescriptor
 
-  type JValue = io.circe.Json
+package object impl extends JsonLibDescriptor {
 
-  type LibReader[T] = io.circe.Decoder[T]
-  type LibWriter[T] = io.circe.Encoder[T]
-  type LibFormatter[T] = io.circe.Codec[T]
+  override type JValue = io.circe.Json
 
-  type JError = io.circe.Error
-  type ResultMonad[A] = cats.Id[A]
+  override type LibReader[T] = io.circe.Decoder[T]
+  override type LibWriter[T] = io.circe.Encoder[T]
+  override type LibFormatter[T] = io.circe.Codec[T]
 
-  type Result[T] = ResultMonad[Either[JError, T]]
+  override type JError = io.circe.Error
+  override type ResultMonad[A] = cats.Id[A]
 
-  def parse(s: String): Result[JValue] = io.circe.parser.parse(s)
+  override type Result[T] = ResultMonad[Either[JError, T]]
 
-  def write[T : LibWriter](t: T): JValue = implicitly[LibWriter[T]].apply(t)
+  override def parse(s: String): Result[JValue] = io.circe.parser.parse(s)
 
-  def read[T : LibReader](value: JValue): Either[JError, T] = implicitly[LibReader[T]].decodeJson(value)
+  override def write[T : LibWriter](t: T): JValue = implicitly[LibWriter[T]].apply(t)
+
+  override def read[T : LibReader](value: JValue): Either[JError, T] = implicitly[LibReader[T]].decodeJson(value)
 }

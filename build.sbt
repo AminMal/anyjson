@@ -111,7 +111,7 @@ lazy val libImpl = (project in file("libImpl"))
 lazy val apis = (project in file("apis"))
   .aggregate(
     List("circe", "json4s", "json4s-jackson", "jsoniter", "play", "spray", "zio-json")
-      .map(name => LocalProject(s"anyjson-$name")): _*
+      .map(name => LocalProject(s"anyjson-$name")) *
   )
 
 lazy val anyjson = (project in file("."))
