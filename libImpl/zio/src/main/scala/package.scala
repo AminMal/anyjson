@@ -1,6 +1,9 @@
 package aminmal.anyjson
 
+import zio.json.JsonDecoder.JsonError
 import zio.json._
+
+import scala.util.Try
 
 package object impl {
 
@@ -18,5 +21,12 @@ package object impl {
   def parse(s: String): Result[JValue] =
     s.fromJson[JValue]
       .left.map(JsonError.Message.apply)
+
+  def write[T : LibWriter](t: T): JValue = implicitly[LibWriter[T]].toJsonAST(t) match {
+    case Left(value) => throw new RuntimeException(value)
+    case Right(value) => value
+  }
+
+  def read[T : LibReader](value: JValue): Either[JError, T] = value.as[T].left.map(JsonError.Message.apply)
 
 }

@@ -17,4 +17,8 @@ package object impl {
 
   def parse(s: String): Result[JValue] = Try(org.json4s.jackson.JsonMethods.parse(s)).toEither
 
+  def write[T : LibWriter](t: T): JValue = implicitly[LibWriter[T]].write(t)
+
+  def read[T : LibReader](value: JValue): Either[JError, T] = implicitly[LibReader[T]].readEither(value)
+
 }

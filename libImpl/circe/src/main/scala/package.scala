@@ -14,4 +14,8 @@ package object impl {
   type Result[T] = ResultMonad[Either[JError, T]]
 
   def parse(s: String): Result[JValue] = io.circe.parser.parse(s)
+
+  def write[T : LibWriter](t: T): JValue = implicitly[LibWriter[T]].apply(t)
+
+  def read[T : LibReader](value: JValue): Either[JError, T] = implicitly[LibReader[T]].decodeJson(value)
 }

@@ -8,30 +8,27 @@ class Macros(override val c: blackbox.Context) extends MacroTemplate(c) {
 
   import c.universe._
 
-  override def makeJReaderImpl[T: c.WeakTypeTag]: c.Tree = {
+  override def makeReaderImpl[T: c.WeakTypeTag]: c.Tree = {
     val typeT = c.weakTypeOf[T]
     q"""
        import zio.json.DeriveJsonDecoder
-       import aminmal.anyjson.impl.JReader
-       JReader.fromLib(DeriveJsonDecoder.gen[$typeT])
+       DeriveJsonDecoder.gen[$typeT]
      """
   }
 
-  override def makeJWriterImpl[T: c.WeakTypeTag]: c.Tree = {
+  override def makeWriterImpl[T: c.WeakTypeTag]: c.Tree = {
     val typeT = c.weakTypeOf[T]
     q"""
        import zio.json.DeriveJsonEncoder
-       import aminmal.anyjson.impl.JWriter
-       JWriter.fromLib(DeriveJsonEncoder.gen[$typeT])
+       DeriveJsonEncoder.gen[$typeT]
      """
   }
 
-  override def makeJFormatterImpl[T: c.WeakTypeTag]: c.Tree = {
+  override def makeFormatterImpl[T: c.WeakTypeTag]: c.Tree = {
     val typeT = c.weakTypeOf[T]
     q"""
        import zio.json.DeriveJsonCodec
-       import aminmal.anyjson.impl.JFormatter
-       JFormatter.fromLib(DeriveJsonCodec.gen[$typeT])
+       DeriveJsonCodec.gen[$typeT]
      """
   }
 }

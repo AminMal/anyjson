@@ -25,9 +25,9 @@ object Build extends AutoPlugin {
                 """package aminmal.anyjson
                   |
                   |package object api {
-                  |  type JReader[T] = aminmal.anyjson.impl.JReader[T]
-                  |  type JWriter[T] = aminmal.anyjson.impl.JWriter[T]
-                  |  type JFormatter[T] = aminmal.anyjson.impl.JFormatter[T]
+                  |  type JReader[T] = aminmal.anyjson.impl.LibReader[T]
+                  |  type JWriter[T] = aminmal.anyjson.impl.LibWriter[T]
+                  |  type JFormatter[T] = aminmal.anyjson.impl.LibFormatter[T]
                   |
                   |  type JValue = aminmal.anyjson.impl.JValue
                   |  type JError = aminmal.anyjson.impl.JError
@@ -35,31 +35,31 @@ object Build extends AutoPlugin {
                   |  type ResultMonad[A] = cats.Id[A]
                   |  type Result[T] = ResultMonad[Either[JError, T]]
                   |}
+                  |
                   |""".stripMargin
 
               val anyJsonFileContent =
-                """package aminmal.anyjson.api
-                  |
-                  |import aminmal.anyjson.impl.Macros
-                  |
-                  |import scala.language.experimental.macros
-                  |
-                  |object AnyJson {
-                  |  def parse(s: String): Result[JValue] = aminmal.anyjson.impl.parse(s)
-                  |
-                  |  def toJson[T](value: T)(implicit jWriter: JWriter[T]): JValue = jWriter.write(value)
-                  |
-                  |  def fromJson[T](json: JValue)(implicit jReader: JReader[T]): Result[T] =
-                  |    jReader.read(json)
-                  |
-                  |  def parseAs[T](s: String)(implicit jReader: JReader[T]): Result[T] =
-                  |    parse(s).flatMap(fromJson[T])
-                  |
-                  |  def jReader[T]: JReader[T] = macro Macros.makeJReaderImpl[T]
-                  |  def jWriter[T]: JWriter[T] = macro Macros.makeJWriterImpl[T]
-                  |  def jFormatter[T]: JFormatter[T] = macro Macros.makeJFormatterImpl[T]
-                  |}
-                  |""".stripMargin
+              """package aminmal.anyjson.api
+                |
+                |import aminmal.anyjson.impl._
+                |
+                |import scala.language.experimental.macros
+                |
+                |object AnyJson {
+                |  def parse(s: String): Result[JValue] = aminmal.anyjson.impl.parse(s)
+                |
+                |  def toJson[T](value: T)(implicit jWriter: JWriter[T]): JValue = write(value)
+                |
+                |  def fromJson[T](json: JValue)(implicit jReader: JReader[T]): Result[T] = read(json)
+                |
+                |  def parseAs[T](s: String)(implicit jReader: JReader[T]): Result[T] = parse(s).flatMap(fromJson[T])
+                |
+                |  def jReader[T]: JReader[T] = macro Macros.makeReaderImpl[T]
+                |  def jWriter[T]: JWriter[T] = macro Macros.makeWriterImpl[T]
+                |  def jFormatter[T]: JFormatter[T] = macro Macros.makeFormatterImpl[T]
+                |}
+                |""".stripMargin
+
               IO.write(packageFileLoc, packageFileContent)
               IO.write(anyJsonFileLoc, anyJsonFileContent)
               Seq(packageFileLoc, anyJsonFileLoc)
