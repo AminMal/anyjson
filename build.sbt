@@ -100,7 +100,7 @@ lazy val api = (project in file("api"))
     name := "api",
     idePackagePrefix := Some("aminmal.anyjson.api"),
     publish / skip := true,
-  ).dependsOn(playImpl)
+  ).dependsOn(zioJsonImpl)
 
 lazy val libImpl = (project in file("libImpl"))
   .aggregate(libImplCore, circeImpl, json4sNativeImpl, json4sJacksonImpl, jsoniterImpl, playImpl, sprayJsonImpl, zioJsonImpl)
